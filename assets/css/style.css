@@ -1,0 +1,25 @@
+/* Copia de styles.css para compatibilidad con GitHub Pages */
+@font-face {
+    font-family: 'Minecraftia';
+    src: url('/TE-AMO-ANGIE/assets/fonts/Minecraftia-Regular.ttf');
+    font-display: swap;
+}
+
+body { font-family: 'Minecraftia', monospace; background-color:#303030; color:white; margin:0; text-align:center; overflow-x:hidden }
+.boton-minecraft{display:block;width:300px;margin:10px auto;padding:10px 20px;text-decoration:none;color:white;font-size:18px;background-color:#6a6a6a;border:3px solid #000;box-shadow:inset -4px -4px 0 #3c3c3c,inset 4px 4px 0 #acacac;transition:all 0.05s linear}
+.boton-minecraft:hover{background-color:#838383;color:#fffb00}
+.boton-minecraft.pequeno{width:150px;font-size:16px}
+#menu-principal{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:url('https://i.imgur.com/GzQvC4z.png') repeat;background-size:64px 64px}
+.logo{width:400px;margin-bottom:50px;image-rendering:pixelated}
+.seccion-destino{min-height:100vh;padding-top:50px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.seccion-destino:not(:target){display:none}.seccion-destino:target{display:flex}
+h1{text-shadow:4px 4px 0 #000;font-size:3em;margin-bottom:40px}
+.boton-volver{position:absolute;top:20px;left:20px;color:#fffb00;text-decoration:none;font-size:1.5em;padding:10px}
+.mundo-item{background-color:#555;border:3px solid #000;padding:20px;margin-top:20px;width:600px;box-shadow:4px 4px 0 #000;text-align:left}
+.mundo-item h2{margin:0 0 10px 0;color:#fffb00}
+.semilla{font-size:0.8em;color:#aaa}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;max-width:960px;width:90%;margin-top:18px}
+.gallery figure{margin:0}
+.gallery img{width:100%;height:160px;object-fit:cover;border:3px solid #000;box-shadow:4px 4px 0 #000;image-rendering:pixelated;display:block}
+.gallery .caption{color:#ddd;font-size:0.85rem;margin-top:6px}
+@media (max-width:700px){.mundo-item{width:90vw}.logo{width:280px}}
