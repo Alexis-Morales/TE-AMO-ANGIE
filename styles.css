@@ -31,7 +31,8 @@ body {
 .boton-minecraft {
     display: block;
     width: 300px;
-    margin: 10px auto;
+    /* margen vertical ligeramente reducido para acercar los botones al logo */
+    margin: 6px auto;
     padding: 10px 20px;
     text-decoration: none;
     color: white;
@@ -69,7 +70,8 @@ body {
 
 .logo {
     width: 400px;
-    margin-bottom: 50px;
+    /* reducir espacio bajo el logo ~2cm (aprox) para acercar botones */
+    margin-bottom: -20px;
     image-rendering: pixelated; 
 }
 
