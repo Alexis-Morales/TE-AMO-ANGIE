@@ -4,22 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft - Página de Selección</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="styles.css?v=20251118T1736">
 </head>
 <body>
     <!-- rebuild-trigger: 2025-11-18T17:30:00Z -->
 
     <div id="menu-principal">
+        <!-- Audio de fondo: coloca tu archivo en assets/audio/background.mp3 -->
+        <audio id="bg-audio" loop>
+            <source src="assets/audio/background.mp3" type="audio/mpeg">
+            <!-- fallback -->
+            Tu navegador no soporta audio HTML5.
+        </audio>
+        <!-- Botón para activar/desactivar audio -->
+        <button id="audio-toggle" class="audio-toggle" aria-pressed="false" title="Activar sonido">🔈</button>
+        <!-- Video de fondo (coloca tu archivo en assets/videos/background.mp4). -->
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source src="assets/videos/background.mp4" type="video/mp4">
+            <source src="assets/videos/background.webm" type="video/webm">
+        </video>
+
+    <div id="menu-principal">
         <img src="https://i.imgur.com/8f1qLwH.png" alt="Minecraft Logo" class="logo">
         <div class="menu-botones">
             <a href="#seleccion-mundo" class="boton-minecraft">
-                MUNDO PARA TI
+                MI MUNDO &lt;3
             </a>
             <a href="#opciones" class="boton-minecraft">
-                OPCIONES
+                ATUENDOS
             </a>
             <a href="#salir" class="boton-minecraft">
-                SALIR DEL JUEGO
+                Ajustes y sonido
             </a>
         </div>
     </div>
@@ -67,4 +82,33 @@
     </div>
 
 </body>
+    <script>
+    // Audio toggle script
+    (function(){
+        const btn = document.getElementById('audio-toggle');
+        const audio = document.getElementById('bg-audio');
+        if(!btn || !audio) return;
+
+        // try to resume audio if user previously interacted
+        btn.addEventListener('click', async function(){
+            const isPlaying = !audio.paused && !audio.ended;
+            try{
+                if(isPlaying){
+                    audio.pause();
+                    btn.textContent = '🔈';
+                    btn.setAttribute('aria-pressed','false');
+                    btn.title = 'Activar sonido';
+                } else {
+                    // attempt to play (may require user gesture which this is)
+                    await audio.play();
+                    btn.textContent = '🔊';
+                    btn.setAttribute('aria-pressed','true');
+                    btn.title = 'Silenciar';
+                }
+            }catch(e){
+                console.warn('No se pudo reproducir el audio:', e);
+            }
+        });
+    })();
+    </script>
 </html>

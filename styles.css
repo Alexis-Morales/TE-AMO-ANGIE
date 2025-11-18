@@ -15,6 +15,18 @@ body {
     overflow-x: hidden; 
 }
 
+/* VIDEO BACKGROUND (inside #menu-principal) */
+#menu-principal{position:relative;overflow:hidden}
+#menu-principal #bg-video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+    filter:brightness(0.55);
+}
+
 /* --- ESTILO DE BOTÓN GENÉRICO (El efecto Minecraft) --- */
 .boton-minecraft {
     display: block;
@@ -52,8 +64,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('https://i.imgur.com/GzQvC4z.png') repeat; /* Fondo de bloques */
-    background-size: 64px 64px;
+    /* background image removed because we use a video background */
 }
 
 .logo {
@@ -151,3 +162,19 @@ h1 {
     .mundo-item{width:90vw}
     .logo{width:280px}
 }
+
+/* Audio toggle button */
+.audio-toggle{
+    position:absolute;
+    top:18px;
+    right:18px;
+    background:rgba(0,0,0,0.5);
+    color:#fffb00;
+    border:2px solid #000;
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:1.1rem;
+    cursor:pointer;
+    z-index:3;
+}
+.audio-toggle[aria-pressed="true"]{background:rgba(255,255,255,0.06);color:#fff}
