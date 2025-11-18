@@ -59,13 +59,16 @@ body {
 
 
 /* --- ESTILO DEL MENÚ PRINCIPAL --- */
+/* Ajuste: subir el bloque del menú (logo + botones) hacia arriba */
 #menu-principal {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* Mover contenido hacia la parte superior en lugar de centrar verticalmente */
+    justify-content: flex-start;
     align-items: center;
-    /* background image removed because we use a video background */
+    /* pequeño espacio superior para que no quede pegado al borde */
+    padding-top: 6vh;
 }
 
 .logo {
