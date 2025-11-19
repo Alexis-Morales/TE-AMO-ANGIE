@@ -10,12 +10,7 @@
     <!-- rebuild-trigger: 2025-11-18T17:30:00Z -->
 
     <div id="menu-principal">
-        <!-- Audio de fondo: coloca tu archivo en assets/audio/background.mp3 -->
-        <audio id="bg-audio" loop>
-            <source src="assets/audio/background.mp3" type="audio/mpeg">
-            <!-- fallback -->
-            Tu navegador no soporta audio HTML5.
-        </audio>
+        <!-- Audio: ahora gestionado por audio-config.js (crea el elemento si hace falta) -->
         <!-- Botón para activar/desactivar audio -->
         <button id="audio-toggle" class="audio-toggle" aria-pressed="false" title="Activar sonido">🔈</button>
         <!-- Video de fondo (usa el clip subido en la carpeta `video/`) -->
@@ -39,33 +34,5 @@
     <!-- Sections moved to separate pages: mundo.html, atuendos.html, ajustes.html -->
 
 </body>
-    <script>
-    // Audio toggle script
-    (function(){
-        const btn = document.getElementById('audio-toggle');
-        const audio = document.getElementById('bg-audio');
-        if(!btn || !audio) return;
-
-        // try to resume audio if user previously interacted
-        btn.addEventListener('click', async function(){
-            const isPlaying = !audio.paused && !audio.ended;
-            try{
-                if(isPlaying){
-                    audio.pause();
-                    btn.textContent = '🔈';
-                    btn.setAttribute('aria-pressed','false');
-                    btn.title = 'Activar sonido';
-                } else {
-                    // attempt to play (may require user gesture which this is)
-                    await audio.play();
-                    btn.textContent = '🔊';
-                    btn.setAttribute('aria-pressed','true');
-                    btn.title = 'Silenciar';
-                }
-            }catch(e){
-                console.warn('No se pudo reproducir el audio:', e);
-            }
-        });
-    })();
-    </script>
+    <script src="audio-config.js"></script>
 </html>
