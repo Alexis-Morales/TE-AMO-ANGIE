@@ -114,6 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!newMutedState && player.paused) {
                  player.play().catch(e => console.error("Error playing audio after toggle:", e));
             }
+            // Marca interacción del usuario para evitar overlay y permitir autoplay
+            try {
+                localStorage.setItem('audio_interaction_seen', 'true');
+                const ov = document.getElementById('audio-overlay');
+                if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
+            } catch (e) {
+                console.warn('audio-config: could not remove overlay after toggle', e);
+            }
         });
     }
 });
