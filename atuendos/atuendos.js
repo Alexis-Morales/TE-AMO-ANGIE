@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
             modalText.textContent = message;
             modalImage.src = MESSAGE_IMAGES[skinType] || '';
             
-            // Opcional: Establecer un título más claro en el modal
-            document.getElementById('modal-titulo').textContent = `¡Mensaje del Atuendo ${skinType.toUpperCase()}!`;
+            // Opcional: Establecer un título más claro en el modal usando la leyenda visible
+            const caption = item.querySelector('p') ? item.querySelector('p').textContent.trim() : skinType.toUpperCase();
+            document.getElementById('modal-titulo').textContent = `¡Mensaje del Atuendo ${caption}!`;
 
             // 3. Muestra el modal
             modal.style.display = 'block';
