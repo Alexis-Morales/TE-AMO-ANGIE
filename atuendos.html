@@ -4,6 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atuendos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="atuendos.css">
+</head>
+<body>
+    
+    <div id="launcher-container">
+        <a href="index.html" class="boton-volver">← Menú</a>
+
+        <header class="launcher-header">
+            <div class="launcher-nav">
+                <span class="nav-item activo">Skins</span>
+            </div>
+            </header>
+
+        <main class="skins-content">
+            <section class="skin-section current-skin">
+                <h2>Actual</h2>
+                <div class="skin-display">
+                    <img id="current-skin-img" src="assets/skins/alex.png" alt="Skin actual">
+                </div>
+            </section>
+
+            <div class="vertical-separator"></div>
+
+            <section class="skin-section library">
+                <h2>Biblioteca</h2>
+                
+                <div class="skin-grid">
+                    
+                    <div class="skin-item" data-skin="pyramid" data-message="¡Este atuendo formal me recuerda a todas las veces que te he visto arreglada! Siempre te ves preciosa.">
+                        <img src="assets/skins/pyramid.png" alt="Skin Pyramid">
+                        <p>Pyramid</p>
+                    </div>
+                    
+                    <div class="skin-item" data-skin="alex" data-message="¡La clásica Alex! Representa tu espíritu aventurero y tu sonrisa que ilumina cualquier mundo.">
+                        <img src="assets/skins/alex.png" alt="Skin Alex">
+                        <p>Alex</p>
+                    </div>
+                    
+                    <div class="skin-item" data-skin="steve" data-message="Este es para mí. Un recordatorio de que somos el equipo perfecto, listo para construir nuestro futuro juntos.">
+                        <img src="assets/skins/steve.png" alt="Skin Steve">
+                        <p>Steve</p>
+                    </div>
+
+                    </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-mensaje" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modal-titulo">Atuendo Seleccionado</h3>
+            <img id="modal-image" src="" alt="Imagen especial" class="modal-img">
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
+    <script src="atuendos.js"></script>
+    <script src="audio-config.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atuendos</title>
     <link rel="stylesheet" href="styles.css?v=20251118T2330">
 </head>
 <body>
