@@ -23,3 +23,12 @@ URL pública:
 
 Contacto
 - Si quieres que los botones enlacen a lugares concretos o que cambie el layout, dime los enlaces o el comportamiento.
+
+Audio
+- Para que la pista por defecto ("Aria Math" de C418) suene al abrir la página, sube el archivo
+	`aria-math.mp3` a la ruta `assets/audio/aria-math.mp3` en el repo. El archivo debe ser un MP3
+	válido. Una vez subido, el script `audio-config.js` lo detectará y lo reproducirá en bucle.
+
+- Nota importante: los navegadores modernos pueden bloquear la reproducción automática de audio
+	no silenciado hasta que el usuario interactúe con la página (click o toque). Si la reproducción
+	se bloquea, haz clic en el botón de audio (`🔈`) para activarla.

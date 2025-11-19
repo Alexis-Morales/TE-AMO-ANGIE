@@ -46,6 +46,21 @@ function playDefaultTrack() {
 const savedVolume = parseFloat(localStorage.getItem('masterVolume')) || 0.5; 
 const savedMute = localStorage.getItem('isMuted') === 'true';
 
+// Comprueba si el archivo local por defecto existe (assets/audio/aria-math.mp3).
+// Si no existe, deja la lógica intacta pero avisa en consola para que subas el MP3.
+async function ensureDefaultTrackExists() {
+    const defaultUrl = AUDIO_STATE.DEFAULT_TRACK_SRC;
+    try {
+        const resp = await fetch(defaultUrl, { method: 'HEAD' });
+        if (resp.ok) return true;
+        console.warn(`audio-config: default track not found at ${defaultUrl} (status ${resp.status})`);
+        return false;
+    } catch (e) {
+        console.warn('audio-config: could not verify default track existence:', e);
+        return false;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Asegura que solo exista un reproductor de audio en el DOM
     let player = document.getElementById('bg-audio');
@@ -61,14 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
     player.volume = savedVolume;
     player.muted = savedMute;
     
-    // Obtiene la canción que debería sonar (la última reproducida o la de Aria Math)
-    const currentTrackSrc = localStorage.getItem('currentTrackSrc') || AUDIO_STATE.DEFAULT_TRACK_SRC;
+    // Decide qué pista usar: la última seleccionada (localStorage) o la por defecto.
+    let currentTrackSrc = localStorage.getItem('currentTrackSrc') || AUDIO_STATE.DEFAULT_TRACK_SRC;
+
+    // Si la pista por defecto es local y no existe, intentamos advertir.
+    if (currentTrackSrc === AUDIO_STATE.DEFAULT_TRACK_SRC) {
+        const exists = await ensureDefaultTrackExists();
+        if (!exists) {
+            // Si no existe el MP3 local, no podemos reproducir desde YouTube directamente.
+            // Mensaje instructivo para que subas `assets/audio/aria-math.mp3` al repo.
+            console.warn('audio-config: please upload the file `assets/audio/aria-math.mp3` to enable Aria Math playback.');
+        }
+    }
     player.src = currentTrackSrc;
-    
-    // Intenta reproducir si no estaba silenciado al cargar la página (requiere interacción previa)
+
+    // Intenta reproducir si no estaba silenciado al cargar la página (puede bloquearse por políticas de autoplay)
     if (!savedMute) {
         player.play().catch(e => {
-            console.log("Audio play prevented, will start on user interaction.");
+            console.log("Audio play prevented by browser autoplay policy. The audio will start after user interaction.");
         });
     }
 
