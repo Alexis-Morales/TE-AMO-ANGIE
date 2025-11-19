@@ -183,3 +183,58 @@ h1 {
     z-index:3;
 }
 .audio-toggle[aria-pressed="true"]{background:rgba(255,255,255,0.06);color:#fff}
+
+/* --- AJUSTES: fondo específico para la página de ajustes --- */
+.page-ajustes {
+    background-image: url('video/fondomine.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Estilos para el control de volumen con aspecto "menu" */
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 320px;
+    height: 14px;
+    background: linear-gradient(90deg, #3b3b3b 0%, #6a6a6a 100%);
+    border: 3px solid #000;
+    box-shadow: inset -4px -4px 0 #2a2a2a, inset 4px 4px 0 #9a9a9a;
+    border-radius: 6px;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+#volume-slider:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.05); }
+
+/* WebKit thumb */
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 34px;
+    height: 28px;
+    background: linear-gradient(#fffb00, #f2d400);
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    border-radius: 4px;
+}
+
+/* Firefox thumb */
+#volume-slider::-moz-range-thumb {
+    width: 34px;
+    height: 28px;
+    background: linear-gradient(#fffb00, #f2d400);
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    border-radius: 4px;
+}
+
+/* Label near slider */
+.volume-control { margin-top: 12px; color: #fff; font-size: 1rem; }
+.volume-control label { display: block; margin-bottom: 6px; color: #fffb00; }
+
+/* Make slider look integrated on small screens */
+@media (max-width:700px){
+    #volume-slider { width: 90%; }
+}
