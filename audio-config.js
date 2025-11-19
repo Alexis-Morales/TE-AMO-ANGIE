@@ -61,7 +61,7 @@ async function ensureDefaultTrackExists() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Asegura que solo exista un reproductor de audio en el DOM
     let player = document.getElementById('bg-audio');
     if (!player) {
