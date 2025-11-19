@@ -271,3 +271,28 @@ document.addEventListener('DOMContentLoaded', () => {
     populateVolumeControl();
     showFirstVisitOverlay();
 });
+
+// Fallback: si el autoplay fue bloqueado y el usuario no vio/dismissó el overlay,
+// intentamos reproducir en el primer clic/tap global para cumplir la intención del usuario.
+document.addEventListener('pointerdown', function audioFirstUserInteraction() {
+    try {
+        const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+        if (!player) return;
+
+        // Si todavía está pausado o silenciado, intentamos desmutear y reproducir.
+        if (player.paused || player.muted) {
+            player.muted = false;
+            localStorage.setItem('isMuted', 'false');
+            player.play().catch(() => {});
+        }
+
+        // Marca que hubo interacción para que el overlay no se vuelva a mostrar
+        localStorage.setItem('audio_interaction_seen', 'true');
+
+        // Si el overlay existe en el DOM, elimínalo
+        const ov = document.getElementById('audio-overlay');
+        if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
+    } catch (e) {
+        console.warn('audio-config: user interaction handler failed', e);
+    }
+}, { once: true });
