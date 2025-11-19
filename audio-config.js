@@ -103,6 +103,24 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.textContent = savedMute ? '🔈' : '🔊';
         btn.setAttribute('aria-pressed', savedMute ? 'false' : 'true');
 
+        // Ensure a small title element is present next to the button
+        let titleEl = document.getElementById('audio-track-title');
+        if (!titleEl) {
+            titleEl = document.createElement('span');
+            titleEl.id = 'audio-track-title';
+            titleEl.style.marginLeft = '8px';
+            titleEl.style.fontSize = '0.9em';
+            titleEl.style.color = '#fff';
+            titleEl.style.fontFamily = 'sans-serif';
+            btn.insertAdjacentElement('afterend', titleEl);
+        }
+
+        // Set initial title from storage or derive from current src
+        const savedTitle = localStorage.getItem('currentTrackTitle');
+        const currentSrc = localStorage.getItem('currentTrackSrc') || AUDIO_STATE.DEFAULT_TRACK_SRC;
+        if (savedTitle) titleEl.textContent = savedTitle;
+        else titleEl.textContent = (currentSrc && typeof currentSrc === 'string') ? currentSrc.split('/').pop() : '';
+
         btn.addEventListener('click', () => {
             const newMutedState = !player.muted;
             player.muted = newMutedState;
@@ -149,6 +167,14 @@ function setTrack(src, title) {
     player.play().catch(e => {
         console.warn('audio-config: play prevented by browser; user interaction required', e);
     });
+
+    // Update any visible track title element
+    try {
+        const titleEl = document.getElementById('audio-track-title');
+        if (titleEl) titleEl.textContent = title || src.split('/').pop();
+    } catch (e) {
+        /* ignore */
+    }
 }
 
 // Populate a track selector if present in the page (uses AUDIO_STATE.CUSTOM_TRACKS and DEFAULT)
