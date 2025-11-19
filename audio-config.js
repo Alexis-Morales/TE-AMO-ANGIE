@@ -305,7 +305,57 @@ document.addEventListener('DOMContentLoaded', () => {
     populateTrackSelector();
     populateVolumeControl();
     showFirstVisitOverlay();
+    createForcePlayButton();
 });
+
+// Create a small, fixed "Play" button so users can force playback without DevTools
+function createForcePlayButton() {
+    try {
+        if (document.getElementById('force-play-btn')) return;
+        const btn = document.createElement('button');
+        btn.id = 'force-play-btn';
+        btn.type = 'button';
+        btn.innerText = '▶ Escuchar';
+        // Basic inline styling so no CSS changes are required
+        Object.assign(btn.style, {
+            position: 'fixed',
+            right: '18px',
+            bottom: '18px',
+            zIndex: '99999',
+            padding: '10px 14px',
+            background: '#0b6b3a',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+        });
+
+        btn.addEventListener('click', () => {
+            const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+            if (!player) return;
+            player.muted = false;
+            localStorage.setItem('isMuted', 'false');
+            localStorage.setItem('audio_interaction_seen', 'true');
+            // If currentTrackSrc is missing, set to default
+            if (!localStorage.getItem('currentTrackSrc')) {
+                localStorage.setItem('currentTrackSrc', AUDIO_STATE.DEFAULT_TRACK_SRC);
+                player.src = AUDIO_STATE.DEFAULT_TRACK_SRC;
+            }
+            player.play().catch(() => {});
+            // Remove overlay if present
+            const ov = document.getElementById('audio-overlay');
+            if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
+            // Remove the button after use
+            if (btn && btn.parentNode) btn.parentNode.removeChild(btn);
+        });
+
+        document.body.appendChild(btn);
+    } catch (e) {
+        console.warn('audio-config: could not create force-play button', e);
+    }
+}
 
 // Fallback: si el autoplay fue bloqueado y el usuario no vio/dismissó el overlay,
 // intentamos reproducir en el primer clic/tap global para cumplir la intención del usuario.
