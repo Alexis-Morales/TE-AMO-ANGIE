@@ -178,6 +178,35 @@ function populateTrackSelector() {
     });
 }
 
+// Public API: set master volume (0.0 - 1.0), persist and update UI
+function setVolume(value) {
+    const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+    const v = Math.max(0, Math.min(1, parseFloat(value)));
+    if (player) player.volume = v;
+    localStorage.setItem('masterVolume', String(v));
+
+    const lbl = document.getElementById('volume-label');
+    if (lbl) lbl.textContent = Math.round(v * 100) + '%';
+    const slider = document.getElementById('volume-slider');
+    if (slider) slider.value = Math.round(v * 100);
+}
+
+function populateVolumeControl() {
+    const slider = document.getElementById('volume-slider');
+    const lbl = document.getElementById('volume-label');
+    if (!slider && !lbl) return;
+
+    const current = parseFloat(localStorage.getItem('masterVolume')) || savedVolume || 0.5;
+    if (lbl) lbl.textContent = Math.round(current * 100) + '%';
+    if (slider) {
+        slider.value = Math.round(current * 100);
+        slider.addEventListener('input', (e) => {
+            const perc = parseInt(e.target.value, 10);
+            setVolume(perc / 100);
+        });
+    }
+}
+
 // First-visit overlay to guarantee a user interaction for autoplay
 function showFirstVisitOverlay() {
     try {
@@ -239,5 +268,6 @@ function showFirstVisitOverlay() {
 // Run small inits if DOM already loaded (or will be run after DOMContentLoaded)
 document.addEventListener('DOMContentLoaded', () => {
     populateTrackSelector();
+    populateVolumeControl();
     showFirstVisitOverlay();
 });
