@@ -117,3 +117,127 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Public API: set the current track, save in localStorage and try to play
+function setTrack(src, title) {
+    const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+    if (!player) return;
+    player.src = src;
+    localStorage.setItem('currentTrackSrc', src);
+    localStorage.setItem('currentTrackTitle', title || src);
+    localStorage.setItem('isCustomPlaying', 'true');
+
+    // If muted, unmute so user hears it (but respect saved mute if user explicitly set it)
+    if (player.muted) {
+        player.muted = false;
+        localStorage.setItem('isMuted', 'false');
+        const btn = document.getElementById('audio-toggle');
+        if (btn) {
+            btn.textContent = '🔊';
+            btn.setAttribute('aria-pressed', 'true');
+        }
+    }
+
+    player.play().catch(e => {
+        console.warn('audio-config: play prevented by browser; user interaction required', e);
+    });
+}
+
+// Populate a track selector if present in the page (uses AUDIO_STATE.CUSTOM_TRACKS and DEFAULT)
+function populateTrackSelector() {
+    const sel = document.getElementById('track-selector');
+    if (!sel) return;
+
+    // Clear existing
+    sel.innerHTML = '';
+
+    // Add default track option
+    const defaultOpt = document.createElement('option');
+    defaultOpt.value = AUDIO_STATE.DEFAULT_TRACK_SRC;
+    defaultOpt.textContent = 'Aria Math (C418) — Predeterminada';
+    sel.appendChild(defaultOpt);
+
+    // Add custom tracks
+    if (Array.isArray(AUDIO_STATE.CUSTOM_TRACKS)) {
+        AUDIO_STATE.CUSTOM_TRACKS.forEach(t => {
+            const o = document.createElement('option');
+            o.value = t.src;
+            o.textContent = t.titulo || t.src;
+            sel.appendChild(o);
+        });
+    }
+
+    // If there is a saved currentTrackSrc, select it
+    const saved = localStorage.getItem('currentTrackSrc') || AUDIO_STATE.DEFAULT_TRACK_SRC;
+    sel.value = saved;
+
+    sel.addEventListener('change', () => {
+        const src = sel.value;
+        const title = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].textContent : src;
+        setTrack(src, title);
+    });
+}
+
+// First-visit overlay to guarantee a user interaction for autoplay
+function showFirstVisitOverlay() {
+    try {
+        const seen = localStorage.getItem('audio_interaction_seen');
+        if (seen === 'true') return;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'audio-overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.left = '0';
+        overlay.style.top = '0';
+        overlay.style.right = '0';
+        overlay.style.bottom = '0';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.background = 'rgba(0,0,0,0.6)';
+        overlay.style.zIndex = '9999';
+
+        const box = document.createElement('div');
+        box.style.background = '#0f1724';
+        box.style.color = '#fff';
+        box.style.padding = '20px 28px';
+        box.style.borderRadius = '8px';
+        box.style.textAlign = 'center';
+        box.style.fontFamily = 'sans-serif';
+
+        const p = document.createElement('p');
+        p.textContent = 'Toca para escuchar la música de fondo';
+        p.style.margin = '0 0 12px 0';
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Tocar 🎵';
+        btn.style.padding = '8px 14px';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '6px';
+        btn.style.cursor = 'pointer';
+
+        btn.addEventListener('click', () => {
+            const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+            if (player) {
+                player.muted = false;
+                localStorage.setItem('isMuted', 'false');
+                player.play().catch(() => {});
+            }
+            localStorage.setItem('audio_interaction_seen', 'true');
+            document.body.removeChild(overlay);
+        });
+
+        box.appendChild(p);
+        box.appendChild(btn);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+    } catch (e) {
+        console.warn('audio-config: overlay failed', e);
+    }
+}
+
+// Run small inits if DOM already loaded (or will be run after DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', () => {
+    populateTrackSelector();
+    showFirstVisitOverlay();
+});
