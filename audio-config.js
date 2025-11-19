@@ -98,6 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Restaurar posición previa y empezar a guardar la posición periódicamente
+    try {
+        restorePlaybackPosition();
+        startPlaybackPositionSaver();
+    } catch (e) {
+        /* ignore */
+    }
+
     // Lógica para el botón de silenciar (si existe)
     const btn = document.getElementById('audio-toggle');
     if (btn) {
@@ -305,57 +313,10 @@ document.addEventListener('DOMContentLoaded', () => {
     populateTrackSelector();
     populateVolumeControl();
     showFirstVisitOverlay();
-    createForcePlayButton();
 });
 
 // Create a small, fixed "Play" button so users can force playback without DevTools
-function createForcePlayButton() {
-    try {
-        if (document.getElementById('force-play-btn')) return;
-        const btn = document.createElement('button');
-        btn.id = 'force-play-btn';
-        btn.type = 'button';
-        btn.innerText = '▶ Escuchar';
-        // Basic inline styling so no CSS changes are required
-        Object.assign(btn.style, {
-            position: 'fixed',
-            right: '18px',
-            bottom: '18px',
-            zIndex: '99999',
-            padding: '10px 14px',
-            background: '#0b6b3a',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
-        });
-
-        btn.addEventListener('click', () => {
-            const player = AUDIO_STATE.player || document.getElementById('bg-audio');
-            if (!player) return;
-            player.muted = false;
-            localStorage.setItem('isMuted', 'false');
-            localStorage.setItem('audio_interaction_seen', 'true');
-            // If currentTrackSrc is missing, set to default
-            if (!localStorage.getItem('currentTrackSrc')) {
-                localStorage.setItem('currentTrackSrc', AUDIO_STATE.DEFAULT_TRACK_SRC);
-                player.src = AUDIO_STATE.DEFAULT_TRACK_SRC;
-            }
-            player.play().catch(() => {});
-            // Remove overlay if present
-            const ov = document.getElementById('audio-overlay');
-            if (ov && ov.parentNode) ov.parentNode.removeChild(ov);
-            // Remove the button after use
-            if (btn && btn.parentNode) btn.parentNode.removeChild(btn);
-        });
-
-        document.body.appendChild(btn);
-    } catch (e) {
-        console.warn('audio-config: could not create force-play button', e);
-    }
-}
+// Force-play button removed per user request
 
 // Fallback: si el autoplay fue bloqueado y el usuario no vio/dismissó el overlay,
 // intentamos reproducir en el primer clic/tap global para cumplir la intención del usuario.
@@ -381,3 +342,65 @@ document.addEventListener('pointerdown', function audioFirstUserInteraction() {
         console.warn('audio-config: user interaction handler failed', e);
     }
 }, { once: true });
+
+// Persist playback position so music can resume on navigation between pages
+function startPlaybackPositionSaver() {
+    try {
+        const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+        if (!player) return;
+
+        // Save every second
+        setInterval(() => {
+            try {
+                if (!player) return;
+                localStorage.setItem('currentTrackPosition', String(player.currentTime || 0));
+                localStorage.setItem('currentTrackPlaying', String(!player.paused));
+            } catch (e) { /* ignore */ }
+        }, 1000);
+
+        // Update flags on play/pause
+        player.addEventListener('play', () => {
+            try { localStorage.setItem('currentTrackPlaying', 'true'); } catch (e) {}
+        });
+        player.addEventListener('pause', () => {
+            try { localStorage.setItem('currentTrackPlaying', 'false'); } catch (e) {}
+        });
+    } catch (e) {
+        console.warn('audio-config: could not start position saver', e);
+    }
+}
+
+// Restore saved position (if any) after metadata is available
+function restorePlaybackPosition() {
+    try {
+        const player = AUDIO_STATE.player || document.getElementById('bg-audio');
+        if (!player) return;
+
+        const savedPos = parseFloat(localStorage.getItem('currentTrackPosition') || '0');
+        const savedPlaying = localStorage.getItem('currentTrackPlaying') === 'true';
+
+        if (!isNaN(savedPos) && savedPos > 0) {
+            const applyPosition = () => {
+                try {
+                    // If requested position is beyond duration, ignore
+                    if (player.duration && savedPos > player.duration) return;
+                    player.currentTime = savedPos;
+                } catch (e) { /* ignore */ }
+            };
+
+            if (player.readyState >= 1) {
+                applyPosition();
+            } else {
+                player.addEventListener('loadedmetadata', applyPosition, { once: true });
+            }
+        }
+
+        // Try to resume playing if it was playing before or user already interacted
+        const interacted = localStorage.getItem('audio_interaction_seen') === 'true';
+        if (savedPlaying || interacted) {
+            player.play().catch(() => {});
+        }
+    } catch (e) {
+        console.warn('audio-config: could not restore playback position', e);
+    }
+}
