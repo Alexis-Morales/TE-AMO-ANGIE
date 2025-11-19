@@ -61,7 +61,7 @@ async function ensureDefaultTrackExists() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Asegura que solo exista un reproductor de audio en el DOM
     let player = document.getElementById('bg-audio');
     if (!player) {
@@ -79,14 +79,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Decide qué pista usar: la última seleccionada (localStorage) o la por defecto.
     let currentTrackSrc = localStorage.getItem('currentTrackSrc') || AUDIO_STATE.DEFAULT_TRACK_SRC;
 
-    // Si la pista por defecto es local y no existe, intentamos advertir.
+    // Si la pista por defecto es local y no existe, intentamos advertir (usando promesas para evitar await)
     if (currentTrackSrc === AUDIO_STATE.DEFAULT_TRACK_SRC) {
-        const exists = await ensureDefaultTrackExists();
-        if (!exists) {
-            // Si no existe el MP3 local, no podemos reproducir desde YouTube directamente.
-            // Mensaje instructivo para que subas `canciones/aria-math.mp3` al repo.
-            console.warn('audio-config: please upload the file `canciones/aria-math.mp3` to enable Aria Math playback.');
-        }
+        ensureDefaultTrackExists().then(exists => {
+            if (!exists) {
+                // Si no existe el MP3 local, no podemos reproducir desde YouTube directamente.
+                // Mensaje instructivo para que subas `canciones/aria-math.mp3` al repo.
+                console.warn('audio-config: please upload the file `canciones/aria-math.mp3` to enable Aria Math playback.');
+            }
+        }).catch(() => {});
     }
     player.src = currentTrackSrc;
 
