@@ -2,8 +2,8 @@
 
 // Estado inicial del audio
 const AUDIO_STATE = {
-    // La canción de fondo por defecto
-    DEFAULT_TRACK_SRC: 'assets/audio/aria-math.mp3', 
+    // La canción de fondo por defecto (subir `canciones/aria-math.mp3`)
+    DEFAULT_TRACK_SRC: 'canciones/aria-math.mp3', 
     
     // Lista de todas las canciones disponibles en el menú de ajustes
     CUSTOM_TRACKS: [
@@ -46,7 +46,7 @@ function playDefaultTrack() {
 const savedVolume = parseFloat(localStorage.getItem('masterVolume')) || 0.5; 
 const savedMute = localStorage.getItem('isMuted') === 'true';
 
-// Comprueba si el archivo local por defecto existe (assets/audio/aria-math.mp3).
+// Comprueba si el archivo local por defecto existe (`canciones/aria-math.mp3`).
 // Si no existe, deja la lógica intacta pero avisa en consola para que subas el MP3.
 async function ensureDefaultTrackExists() {
     const defaultUrl = AUDIO_STATE.DEFAULT_TRACK_SRC;
@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const exists = await ensureDefaultTrackExists();
         if (!exists) {
             // Si no existe el MP3 local, no podemos reproducir desde YouTube directamente.
-            // Mensaje instructivo para que subas `assets/audio/aria-math.mp3` al repo.
-            console.warn('audio-config: please upload the file `assets/audio/aria-math.mp3` to enable Aria Math playback.');
+            // Mensaje instructivo para que subas `canciones/aria-math.mp3` al repo.
+            console.warn('audio-config: please upload the file `canciones/aria-math.mp3` to enable Aria Math playback.');
         }
     }
     player.src = currentTrackSrc;
