@@ -1,0 +1,180 @@
+/* atuendos.css: Estilos específicos para el diseño del Launcher */
+
+/* Oculta los elementos de menú base para usar el diseño del launcher */
+#menu-principal {
+    display: none; 
+}
+
+/* Contenedor principal para simular el launcher */
+#launcher-container {
+    width: 90%;
+    max-width: 1000px;
+    height: 90vh; /* Alto de la ventana */
+    margin: 5vh auto;
+    background-color: #383838; /* Fondo gris oscuro del launcher */
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0px 0px #000;
+    text-align: left;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    color: #DDDDDD;
+    font-size: 14px;
+    font-family: 'Minecraftia', monospace;
+    position: relative; /* Para posicionar el botón de volver */
+}
+
+/* Cabecera del Launcher (Pestañas) */
+.launcher-header {
+    background-color: #2e2e2e;
+    padding: 10px 20px;
+    border-bottom: 2px solid #000;
+}
+
+.launcher-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-item {
+    padding: 5px 10px;
+    cursor: default;
+}
+
+.nav-item.activo {
+    color: #FFFFFF;
+    background-color: #555555;
+    border-top: 2px solid #AAAAAA;
+    border-left: 2px solid #AAAAAA;
+    border-right: 2px solid #222222;
+    border-bottom: 2px solid #222222;
+}
+
+/* Contenido Principal de Skins */
+.skins-content {
+    display: flex;
+    flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+.skin-section {
+    padding: 20px;
+}
+
+.skin-section h2 {
+    color: #FFFFFF;
+    text-shadow: 2px 2px 0px #000;
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Columna de la skin actual */
+.current-skin {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #444; /* Línea de división */
+}
+
+.skin-display img {
+    width: 200px; /* Tamaño grande de la skin actual */
+    image-rendering: pixelated;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0px 0px #000;
+    margin-top: 20px;
+}
+
+/* Separador vertical sutil */
+.vertical-separator {
+    width: 1px;
+    background-color: #444;
+}
+
+/* Biblioteca de Skins */
+.library {
+    width: 65%;
+}
+
+.skin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+}
+
+.skin-item {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.skin-item img {
+    width: 80px; /* Tamaño de las skins en la biblioteca */
+    height: auto;
+    image-rendering: pixelated;
+    border: 2px solid transparent;
+    transition: border 0.1s;
+}
+
+.skin-item:hover {
+    background-color: #4a4a4a; /* Color al pasar el ratón */
+}
+
+.skin-item:hover img {
+    border: 2px solid #fffb00; /* Borde amarillo al seleccionar */
+}
+
+.skin-item p {
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #DDDDDD;
+}
+
+/* --- ESTILOS DEL MODAL (Cuadro Emergente) --- */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000; /* Siempre encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+}
+
+.modal-content {
+    background-color: #444;
+    color: white;
+    margin: 15% auto; /* Centrar vertical y horizontalmente */
+    padding: 20px;
+    border: 3px solid #000;
+    box-shadow: 10px 10px 0px 0px #000;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+}
+
+.modal-img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border: 2px solid #fffb00;
+    image-rendering: pixelated;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #fffb00;
+    text-decoration: none;
+}
