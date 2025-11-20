@@ -213,15 +213,16 @@ h1 {
 }
 
 #track-selector {
-    width: 360px;
-    height: 44px;
-    padding: 8px 44px 8px 12px;
+    width: 520px;
+    max-width: calc(100% - 48px);
+    height: 56px;
+    padding: 10px 56px 10px 14px;
     background: linear-gradient(180deg,#6a6a6a,#4b4b4b);
     color: #fff;
     border: 3px solid #000;
     box-shadow: inset -4px -4px 0 #3c3c3c, inset 4px 4px 0 #acacac;
     font-family: 'Minecraftia', monospace;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.2;
     appearance: none;
     -webkit-appearance: none;
@@ -250,7 +251,7 @@ h1 {
 .yt-playlist h3 {
     margin: 6px 0 6px 0;
     line-height: 1.1;
-    text-align: left;
+    text-align: center;
 }
 .yt-playlist iframe {
     width: 100%;
