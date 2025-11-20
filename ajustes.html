@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajustes y Sonido</title>
     <link rel="stylesheet" href="styles.css?v=20251120T0000">
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
 </head>
 <body class="page-ajustes">
     <div id="menu-principal">
         <button id="audio-toggle" class="audio-toggle" aria-pressed="false" title="Activar sonido">🔈</button>
         <a href="index.html" class="boton-volver">← Volver al Menú</a>
         <h1>Ajustes y Sonido</h1>
-        <p>Ajusta el volumen, efectos y preferencias del sitio aquí.</p>
 
         <section>
             <h2>Audio</h2>
@@ -30,6 +32,17 @@
             </div>
         </section>
     </div>
+    <script>
+        // Clear specific audio-related localStorage keys so the ajustes page shows
+        // updated track list immediately (avoids stale selection from older JS).
+        try {
+            // Only clear selection-related keys, keep volume/mute preferences
+            localStorage.removeItem('currentTrackSrc');
+            localStorage.removeItem('currentTrackTitle');
+            localStorage.removeItem('currentTrackPosition');
+            localStorage.removeItem('currentTrackPlaying');
+        } catch (e) { /* ignore */ }
+    </script>
     <script src="audio-config.js?v=20251120T0000"></script>
 </body>
 </html>
