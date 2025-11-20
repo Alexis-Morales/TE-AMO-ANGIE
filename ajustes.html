@@ -32,17 +32,9 @@
             </div>
         </section>
     </div>
-    <script>
-        // Clear specific audio-related localStorage keys so the ajustes page shows
-        // updated track list immediately (avoids stale selection from older JS).
-        try {
-            // Only clear selection-related keys, keep volume/mute preferences
-            localStorage.removeItem('currentTrackSrc');
-            localStorage.removeItem('currentTrackTitle');
-            localStorage.removeItem('currentTrackPosition');
-            localStorage.removeItem('currentTrackPlaying');
-        } catch (e) { /* ignore */ }
-    </script>
+    <!-- kept audio state intact to allow cross-page resume; previously this script
+         cleared `currentTrackSrc` and related keys which caused playback to stop
+         when navigating to other pages. -->
     <script src="audio-config.js?v=20251120T0000"></script>
 </body>
 </html>
