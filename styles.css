@@ -225,6 +225,14 @@ h1 {
     -webkit-appearance: none;
 }
 
+/* Add a pixel-style down arrow using an inline SVG as background so the select looks like a button */
+#track-selector {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14'><polygon points='2,5 12,5 7,11' fill='%23fffb00'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 44px;
+}
+
 /* Small responsive iframe container for YouTube playlist */
 .yt-playlist {
     margin-top: 18px;

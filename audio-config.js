@@ -7,20 +7,9 @@ const AUDIO_STATE = {
     
     // Lista de todas las canciones disponibles en el menú de ajustes
     CUSTOM_TRACKS: [
-        { 
-            id: 'custom1', 
-            titulo: 'Melodía para Angie', 
-            src: 'assets/audio/melodia-propia.mp3' // Tu archivo 1
-        },
-        { 
-            id: 'custom2', 
-            titulo: 'Recuerdos Felices', 
-            src: 'https://p.scdn.co/mp3url-de-tu-bandlab-o-soundcloud.mp3' // Tu archivo 2 o URL directa
-        },
-            { id: 'angel', titulo: 'Angel', src: 'canciones/Angel.mp3' },
-            { id: 'teamo', titulo: 'Te Amo Como a Nadie', src: 'canciones/Te Amo Como a Nadie - suei.mp3' },
-            { id: 'mivida', titulo: 'Mi vida son tus ojos', src: 'canciones/mi vida son tus ojos.mp3' },
-            // Puedes añadir URLs externas o más archivos locales aquí
+        { id: 'angel', titulo: 'Angel', src: 'canciones/Angel.mp3' },
+        { id: 'teamo', titulo: 'Te Amo Como a Nadie', src: 'canciones/Te Amo Como a Nadie - suei.mp3' },
+        { id: 'mivida', titulo: 'Mi vida son tus ojos', src: 'canciones/mi vida son tus ojos.mp3' }
     ],
     
     // Referencia al elemento de audio (se inicializa en 'main.js')
