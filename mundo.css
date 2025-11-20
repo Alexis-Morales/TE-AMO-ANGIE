@@ -10,7 +10,7 @@
     max-width: 800px;
     margin: 5vh auto;
     background-color: #383838; /* Fallback color while image loads */
-    background-image: url('../video/fondomundo.jpg');
+    background-image: url('video/fondomundo.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
