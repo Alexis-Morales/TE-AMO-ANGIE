@@ -20,13 +20,14 @@ const AUDIO_STATE = {
 function playDefaultTrack() {
     const player = AUDIO_STATE.player || document.getElementById('bg-audio');
     
-    if (player && player.src !== window.location.origin + '/' + AUDIO_STATE.DEFAULT_TRACK_SRC) {
-        player.src = AUDIO_STATE.DEFAULT_TRACK_SRC;
+    const defaultAbs = new URL(AUDIO_STATE.DEFAULT_TRACK_SRC, location.href).href;
+    if (player && player.src !== defaultAbs) {
+        player.src = defaultAbs;
         // La reproducción se maneja en main.js para evitar errores de autostart
     }
     
-    // Guarda el estado en localStorage
-    localStorage.setItem('currentTrackSrc', AUDIO_STATE.DEFAULT_TRACK_SRC);
+    // Guarda el estado en localStorage (usar URL absoluta para consistencia entre páginas)
+    localStorage.setItem('currentTrackSrc', defaultAbs);
     localStorage.setItem('isCustomPlaying', 'false');
 }
 
@@ -70,9 +71,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Decide qué pista usar: la última seleccionada (localStorage) o la por defecto.
     let currentTrackSrc = localStorage.getItem('currentTrackSrc') || AUDIO_STATE.DEFAULT_TRACK_SRC;
+    // Normaliza a URL absoluta para evitar problemas de comparación entre páginas
+    try {
+        currentTrackSrc = (currentTrackSrc && typeof currentTrackSrc === 'string') ? new URL(currentTrackSrc, location.href).href : currentTrackSrc;
+    } catch (e) {
+        // si algo falla, dejar el valor tal cual
+    }
 
     // Si la pista por defecto es local y no existe, intentamos advertir (usando promesas para evitar await)
-    if (currentTrackSrc === AUDIO_STATE.DEFAULT_TRACK_SRC) {
+    const defaultAbs = new URL(AUDIO_STATE.DEFAULT_TRACK_SRC, location.href).href;
+    if (currentTrackSrc === defaultAbs) {
         ensureDefaultTrackExists().then(exists => {
             if (!exists) {
                 // Si no existe el MP3 local, no podemos reproducir desde YouTube directamente.
@@ -149,8 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
 function setTrack(src, title) {
     const player = AUDIO_STATE.player || document.getElementById('bg-audio');
     if (!player) return;
-    player.src = src;
-    localStorage.setItem('currentTrackSrc', src);
+    // Normaliza la fuente a una URL absoluta para evitar discrepancias entre páginas
+    let resolvedSrc = src;
+    try {
+        resolvedSrc = (typeof src === 'string') ? new URL(src, location.href).href : src;
+    } catch (e) {
+        resolvedSrc = src;
+    }
+    player.src = resolvedSrc;
+    localStorage.setItem('currentTrackSrc', resolvedSrc);
     localStorage.setItem('currentTrackTitle', title || src);
     localStorage.setItem('isCustomPlaying', 'true');
 
@@ -172,7 +187,7 @@ function setTrack(src, title) {
     // Update any visible track title element
     try {
         const titleEl = document.getElementById('audio-track-title');
-        if (titleEl) titleEl.textContent = title || src.split('/').pop();
+        if (titleEl) titleEl.textContent = title || (typeof resolvedSrc === 'string' ? new URL(resolvedSrc).pathname.split('/').pop() : src);
     } catch (e) {
         /* ignore */
     }
@@ -186,9 +201,9 @@ function populateTrackSelector() {
     // Clear existing
     sel.innerHTML = '';
 
-    // Add default track option
+    // Add default track option (usar URL absoluta como value para que coincida con lo guardado en localStorage)
     const defaultOpt = document.createElement('option');
-    defaultOpt.value = AUDIO_STATE.DEFAULT_TRACK_SRC;
+    defaultOpt.value = new URL(AUDIO_STATE.DEFAULT_TRACK_SRC, location.href).href;
     defaultOpt.textContent = 'Aria Math (C418) — Predeterminada';
     sel.appendChild(defaultOpt);
 
@@ -196,7 +211,11 @@ function populateTrackSelector() {
     if (Array.isArray(AUDIO_STATE.CUSTOM_TRACKS)) {
         AUDIO_STATE.CUSTOM_TRACKS.forEach(t => {
             const o = document.createElement('option');
-            o.value = t.src;
+            try {
+                o.value = new URL(t.src, location.href).href;
+            } catch (e) {
+                o.value = t.src;
+            }
             o.textContent = t.titulo || t.src;
             sel.appendChild(o);
         });
