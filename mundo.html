@@ -9,44 +9,55 @@
 </head>
 <body>
     <button id="audio-toggle" class="audio-toggle" aria-pressed="false" title="Activar sonido">🔈</button>
+    <a href="index.html" class="boton-volver">◀ Volver</a>
 
     <div id="worlds-launcher">
         <header class="worlds-header">
             <div class="header-tab active-tab">
-                <span class="tab-icon">🗃️</span>
                 <span>Worlds</span>
             </div>
-            <a href="index.html" class="close-button">&times;</a>
         </header>
 
         <main class="worlds-content">
             <div class="create-new-button">
-                <h1>¡Entra al Mundo de Nuestro Amor!</h1>
-                <span class="create-new-text">Explora los recuerdos que hemos creado.</span>
+                <h1>¡Bienvenida/o al Mundo de Nuestro Amor!</h1>
+                <p>Aquí puedes explorar recuerdos, fotos y entradas especiales.</p>
             </div>
 
             <div class="worlds-list">
-                
-                <a href="https://classic.minecraft.net/" target="_blank" class="world-item-link">
-                    <div class="world-item">
-                        
-                        <div class="world-thumbnail">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><rect width='100%25' height='100%25' fill='%23666'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Minecraftia, monospace' font-size='14' fill='%23fffb00'>Mi Mundo &lt;3</text></svg>" alt="Foto de Nosotros Juntos">
-                        </div>
-
-                        <div class="world-info">
-                            <h2 class="world-name">Tú Eres Mi Mundo...</h2>
-                            <p class="world-type">Sobreviviendo Juntos (∞)</p>
-                            <p class="world-date">Creado: 19/11/2025</p>
-                        </div>
-                        
-                        <div class="world-action">
-                            <span class="edit-icon" title="Iniciar Juego Online">▶️</span>
-                        </div>
+                <!-- Mundo principal -->
+                <div class="world-item">
+                    <div class="world-thumbnail">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'><rect width='100%25' height='100%25' fill='%23666'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Minecraftia, monospace' font-size='14' fill='%23fffb00'>Mi Mundo &lt;3</text></svg>" alt="Miniatura Mundo">
                     </div>
-                </a>
-                
+                    <div class="world-info">
+                        <h2 class="world-name">El Mundo de Recuerdos Felices</h2>
+                        <p class="world-type">Semilla: 19/11/2025</p>
+                    </div>
+                    <div class="world-action">
+                        <a class="boton-minecraft pequeno" href="https://classic.minecraft.net/" target="_blank">Entrar</a>
+                    </div>
                 </div>
+
+                <!-- Recuerdos / entradas -->
+                <div class="world-item">
+                    <div class="world-info">
+                        <h2 class="world-name">Recuerdo 1</h2>
+                    </div>
+                </div>
+
+                <div class="world-item">
+                    <div class="world-info">
+                        <h2 class="world-name">Recuerdo 1</h2>
+                    </div>
+                </div>
+
+                <div class="world-item">
+                    <div class="world-info">
+                        <h2 class="world-name">Recuerdo 2</h2>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
