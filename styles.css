@@ -184,28 +184,29 @@ h1 {
 }
 .audio-toggle[aria-pressed="true"]{background:rgba(255,255,255,0.06);color:#fff}
 
-/* Mostrar título de la pista justo debajo del botón de audio y darle espacio */
+/* Mostrar título de la pista centrado en la parte superior (como antes) */
 #audio-track-title{
     display:block;
     position:absolute;
-    top:62px; /* baja un poco debajo del botón */
-    right:18px;
-    max-width: min(60vw, 420px);
-    width: max-content;
-    text-align: right;
-    font-size: 0.95rem;
+    top:18px;
+    left:50%;
+    transform: translateX(-50%);
+    max-width: min(70vw, 640px);
+    width: auto;
+    text-align: center;
+    font-size: 1rem;
     color: #fff;
     font-family: 'Minecraftia', monospace;
     white-space: normal;
     word-break: break-word;
     z-index:4;
-    padding: 4px 8px 6px 8px;
+    padding: 6px 12px;
     background: rgba(0,0,0,0.15);
     border-radius: 6px;
 }
 
 @media (max-width:700px){
-    #audio-track-title{ right:12px; left:12px; text-align:center; max-width: calc(100% - 24px); }
+    #audio-track-title{ left:50%; transform:translateX(-50%); max-width: calc(100% - 24px); top:56px; }
 }
 
 /* --- AJUSTES: fondo específico para la página de ajustes --- */
