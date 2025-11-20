@@ -184,6 +184,30 @@ h1 {
 }
 .audio-toggle[aria-pressed="true"]{background:rgba(255,255,255,0.06);color:#fff}
 
+/* Mostrar título de la pista justo debajo del botón de audio y darle espacio */
+#audio-track-title{
+    display:block;
+    position:absolute;
+    top:62px; /* baja un poco debajo del botón */
+    right:18px;
+    max-width: min(60vw, 420px);
+    width: max-content;
+    text-align: right;
+    font-size: 0.95rem;
+    color: #fff;
+    font-family: 'Minecraftia', monospace;
+    white-space: normal;
+    word-break: break-word;
+    z-index:4;
+    padding: 4px 8px 6px 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 6px;
+}
+
+@media (max-width:700px){
+    #audio-track-title{ right:12px; left:12px; text-align:center; max-width: calc(100% - 24px); }
+}
+
 /* --- AJUSTES: fondo específico para la página de ajustes --- */
 .page-ajustes {
     /* Use raw.githubusercontent URL as a reliable fallback until Pages CDN updates */
