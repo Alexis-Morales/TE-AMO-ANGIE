@@ -1,0 +1,157 @@
+/* mundo.css: Estilos específicos para el Launcher de Mundos */
+
+/* Oculta los elementos de menú base para usar el diseño del launcher */
+#menu-principal {
+    display: none; 
+}
+
+#worlds-launcher {
+    width: 90%;
+    max-width: 800px;
+    margin: 5vh auto;
+    background-color: #383838; /* Fondo gris oscuro del launcher */
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0px 0px #000;
+    font-family: 'Minecraftia', monospace;
+    position: relative;
+    padding: 0;
+}
+
+/* --- Cabecera y Pestañas --- */
+.worlds-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #4a4a4a; /* Gris medio de la barra superior */
+    border-bottom: 3px solid #000;
+}
+
+.header-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    color: #DDDDDD;
+    font-size: 1.1em;
+    cursor: default;
+    border-right: 3px solid #000;
+}
+
+.active-tab {
+    background-color: #666666; /* Gris más claro para la pestaña activa */
+    color: white;
+}
+
+.close-button {
+    margin-left: auto; /* Empuja el botón a la derecha */
+    padding: 0 15px;
+    text-decoration: none;
+    font-size: 2em;
+    color: #DDDDDD;
+}
+
+/* --- Contenido Principal --- */
+.worlds-content {
+    padding: 20px;
+}
+
+/* Botón de "Crear Nuevo" (Usado como encabezado) */
+.create-new-button {
+    background-color: #777; /* Gris claro para el botón */
+    border: 2px solid #000;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 0px 0px #000;
+    cursor: default;
+}
+
+.create-new-button h1 {
+    font-size: 1.5em;
+    text-shadow: 3px 3px 0px #000;
+    margin: 0 0 5px 0;
+}
+
+.create-new-text {
+    font-size: 0.8em;
+    color: #EEE;
+}
+
+/* --- Lista de Mundos --- */
+.worlds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.world-item-link {
+    text-decoration: none;
+}
+
+.world-item {
+    display: flex;
+    align-items: center;
+    background-color: #555; /* Fondo de cada ítem de mundo */
+    border: 2px solid #000;
+    box-shadow: 2px 2px 0px 0px #000;
+    padding: 10px;
+    color: white;
+    transition: background-color 0.1s;
+}
+
+.world-item:hover {
+    background-color: #777; /* Resaltar al pasar el ratón */
+}
+
+/* Miniatura/Thumbnail */
+.world-thumbnail {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border: 1px solid #000;
+    margin-right: 15px;
+}
+
+.world-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+/* Información del Mundo */
+.world-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.world-name {
+    font-size: 1.2em;
+    margin: 0;
+    color: #fffb00; /* Título amarillo */
+    text-shadow: 1px 1px 0px #000;
+}
+
+.world-type, .world-date {
+    font-size: 0.7em;
+    color: #DDD;
+    margin: 2px 0;
+}
+
+/* Icono de Acción (El lápiz/papelera) */
+.world-action {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+}
+
+.edit-icon {
+    font-size: 1.5em;
+    color: #fffb00;
+    cursor: pointer;
+}
+
+@media (max-width:700px){
+    #worlds-launcher{width:94%; margin:3vh auto}
+    .world-thumbnail{width:72px;height:72px}
+}
