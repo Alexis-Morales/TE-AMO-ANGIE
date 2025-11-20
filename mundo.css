@@ -5,36 +5,51 @@
     display: none; 
 }
 
-#worlds-launcher {
-    width: 90%;
-    max-width: 800px;
-    margin: 5vh auto;
-    background-color: #383838; /* Fallback color while image loads */
+/* Apply the world background to the whole page (body) so the image covers the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: #383838; /* fallback color */
     background-image: url('video/fondomundo.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    border: 3px solid #000;
-    box-shadow: 8px 8px 0px 0px #000;
-    font-family: 'Minecraftia', monospace;
-    position: relative;
-    padding: 0;
+    background-attachment: fixed;
     color: #fff;
+    position: relative;
+    font-family: 'Minecraftia', monospace;
 }
 
-/* Small overlay to ensure text is readable over the background */
-#worlds-launcher::after {
+/* Full-page overlay to keep text readable over the background */
+body::before {
     content: '';
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
     pointer-events: none;
+    z-index: 0;
+}
+
+#worlds-launcher {
+    width: 90%;
+    max-width: 800px;
+    margin: 5vh auto;
+    background-color: rgba(56,56,56,0.75); /* semi-transparent to reveal page background */
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0px 0px #000;
+    position: relative;
+    padding: 0;
+    color: #fff;
+    z-index: 1; /* sit above the full-page overlay */
 }
 
 #worlds-launcher > .worlds-header,
 #worlds-launcher > .worlds-content {
     position: relative; /* ensure content sits above overlay */
-    z-index: 1;
+    z-index: 2;
 }
 
 /* --- Cabecera y Pestañas --- */
