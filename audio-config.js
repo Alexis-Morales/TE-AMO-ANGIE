@@ -7,7 +7,7 @@ const AUDIO_STATE = {
     
     // Lista de todas las canciones disponibles en el menú de ajustes
     CUSTOM_TRACKS: [
-        { id: 'angel', titulo: 'Angel', src: 'canciones/angel.mp3' },
+        { id: 'angel', titulo: 'Ángel', src: 'canciones/angel.mp3' },
         { id: 'teamo', titulo: 'Te Amo Como a Nadie', src: 'canciones/te-amo-como-a-nadie.mp3' },
         { id: 'mivida', titulo: 'Mi vida son tus ojos', src: 'canciones/mi-vida-son-tus-ojos.mp3' }
     ],
