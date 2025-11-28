@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update thumbnail preview to the provided asset (URL-encoded filename)
         const thumb = document.querySelector('.world-thumbnail img');
         if (thumb) {
-            thumb.src = 'video/angieee%20(1).jpeg?v=20251120T2105';
+            thumb.src = '/TE-AMO-ANGIE/video/angieee-1.jpeg?v=20251128T1828';
             thumb.alt = 'Angieee preview';
         }
 
