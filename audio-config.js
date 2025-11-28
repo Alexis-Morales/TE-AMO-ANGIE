@@ -31,6 +31,28 @@ function playDefaultTrack() {
     localStorage.setItem('isCustomPlaying', 'false');
 }
 
+// Small page-specific fixes: if we're on `mundo.html`, ensure thumbnail and date
+// are set client-side. This helps when CDN/html caching delays show the latest HTML.
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        const isMundo = location.pathname.endsWith('mundo.html') || location.href.includes('/mundo.html');
+        if (!isMundo) return;
+
+        // Update thumbnail preview to the provided asset (URL-encoded filename)
+        const thumb = document.querySelector('.world-thumbnail img');
+        if (thumb) {
+            thumb.src = 'video/angieee%20(1).jpeg?v=20251120T2105';
+            thumb.alt = 'Angieee preview';
+        }
+
+        // Update created date
+        const dateEl = document.querySelector('.world-date');
+        if (dateEl) dateEl.textContent = 'Creado: 17/04/2025';
+    } catch (e) {
+        console.warn('audio-config: could not apply mundo.html fixes', e);
+    }
+});
+
 // ====================================================================
 // Código de inicialización de audio que se carga en todas las páginas
 // ====================================================================
