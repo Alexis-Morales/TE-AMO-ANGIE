@@ -9,7 +9,8 @@ const AUDIO_STATE = {
     CUSTOM_TRACKS: [
         { id: 'angel', titulo: 'Ángel', src: 'canciones/angel.mp3' },
         { id: 'teamo', titulo: 'Te Amo Como a Nadie', src: 'canciones/te-amo-como-a-nadie.mp3' },
-        { id: 'mivida', titulo: 'Mi vida son tus ojos', src: 'canciones/mi-vida-son-tus-ojos.mp3' }
+        { id: 'mivida', titulo: 'Mi vida son tus ojos', src: 'canciones/mi-vida-son-tus-ojos.mp3' },
+        { id: 'actually', titulo: 'Actually Romantic', src: 'canciones/actually-romantic.mp3' }
     ],
     
     // Referencia al elemento de audio (se inicializa en 'main.js')
