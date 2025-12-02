@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Configuración de Imágenes de Mensaje ---
     // Coloca aquí las URLs de las fotos que quieres que aparezcan en el modal.
     const MESSAGE_IMAGES = {
-        'pyramid': 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?q=80&w=400&auto=format&fit=crop',
+        'pyramid': 'https://raw.githubusercontent.com/Alexis-Morales/TE-AMO-ANGIE/main/video/pagina2.jpeg?v=20251202T0100',
         'alex': 'https://raw.githubusercontent.com/Alexis-Morales/TE-AMO-ANGIE/main/video/pagina1.jpeg?v=20251202T0010',
         'steve': 'https://images.unsplash.com/photo-1502444330042-434ae45dd9c1?q=80&w=400&auto=format&fit=crop'
     };
