@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const MESSAGE_IMAGES = {
         'pyramid': 'https://alexis-morales.github.io/TE-AMO-ANGIE/video/pagina2.jpeg?v=20251202T0030',
         'alex': 'https://raw.githubusercontent.com/Alexis-Morales/TE-AMO-ANGIE/main/video/pagina1.jpeg?v=20251202T0010',
-        'steve': 'https://images.unsplash.com/photo-1502444330042-434ae45dd9c1?q=80&w=400&auto=format&fit=crop'
+        'steve': 'https://alexis-morales.github.io/TE-AMO-ANGIE/video/snupi.jpg?v=20251202T0200'
     };
     
     // --- Lógica del Modal y Selección de Skin ---
